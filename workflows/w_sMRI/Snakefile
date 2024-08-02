@@ -77,7 +77,7 @@ rule run_dlmuse:
 
 ruleorder: rename_rois_user > rename_rois_computed
 
-rule rename_rois_computed:
+rule rename_rois:
     '''
     Rename MUSE roi indices to roi codes
     '''
