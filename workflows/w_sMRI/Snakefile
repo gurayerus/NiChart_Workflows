@@ -39,7 +39,8 @@ OUT_RESULTS = expand(f"../../{dir_output}/{{study}}/out_combined/{{study}}_{{sty
 OUT_FLAG = [f"../../{dir_output}/flag_VIEWED.csv"]
 
 OUT_FILES = [OUT_CONFIG] + OUT_RESULTS + OUT_FLAG
-#OUT_FILES = [OUT_CONFIG]
+
+#OUT_FILES = ["../../output/vTest2/Study1/dlmuse/Study1_DLMUSE.csv"]
 
 #print("Target out files:" + '\n' + '\n'.join(OUT_FILES) + '\n')
 
@@ -73,11 +74,11 @@ rule run_dlmuse:
     resources:
         mem_mb=32000
     shell:
-        "bash ../../utils/dlmuse/util_run_dlmuse.sh {input} {output}"
+        "bash ../../utils/dlmuse/util_dlmuse_apply.sh {input} {output}"
 
 ruleorder: rename_rois_user > rename_rois_computed
 
-rule rename_rois:
+rule rename_rois_computed:
     '''
     Rename MUSE roi indices to roi codes
     '''
@@ -172,7 +173,7 @@ rule filter_age_harmonize:
         min_val='50',
         max_val='95',
     output:
-        temp(f"../../{dir_output}/{{study}}/filtered_data/{{study}}_{{dtype}}.csv")
+        f"../../{dir_output}/{{study}}/filtered_data/{{study}}_{{dtype}}.csv"
     resources:
         mem_mb=8000
     shell:
